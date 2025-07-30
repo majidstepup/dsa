@@ -1,30 +1,41 @@
 <?php
 // DSA: Hash Table
 
-$hashSet = [null, null, null, null, null, null, null, null, null, null];
+$hashSet = [[], [], [], [], [], [], [], [], [], []];
 
-function hashFunction(string $name): int
+function hashFunction(string $value): int
 {
     $sumOfChars = 0;
-    for ($i = 0; $i < strlen($name); $i++) {
-        $sumOfChars += ord($name[$i]);
+    for ($i = 0; $i < strlen($value); $i++) {
+        $sumOfChars += ord($value[$i]);
     }
 
     return $sumOfChars % 10;
 }
 
-function contains(string $name): bool
+function add(string $value): void
 {
     global $hashSet;
-    $index = hashFunction($name);
-    return $hashSet[$index] == $name;
+    $index = hashFunction($value);
+    if (!in_array($value, $hashSet[$index])) {
+        $hashSet[$index][] = $value;
+    }
+}
+
+function contains(string $value): bool
+{
+    global $hashSet;
+    $index = hashFunction($value);
+    $bucket = $hashSet[$index];
+    return in_array($value, $bucket);
 }
 
 // add name in hash set
-$hashSet[hashFunction('Bob')] = 'Bob';
-$hashSet[hashFunction('Pete')] = 'Pete';
-$hashSet[hashFunction('Jones')] = 'Jones';
-$hashSet[hashFunction('Lisa')] = 'Lisa';
-$hashSet[hashFunction('Siri')] = 'Siri';
+add('Bob');
+add('Pete');
+add('Jones');
+add('Lisa');
+add('Siri');
+add('Abdul Majid');
 
-echo 'Is found Jones in hash set: ' . (contains('Jones') ? 'Yes' : 'No') . "\n";
+echo 'Contains Abdul Majid: ' . (contains('Abdul Majid') ? 'Yes' : 'No') . "\n";
