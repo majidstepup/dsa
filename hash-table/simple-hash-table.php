@@ -13,7 +13,7 @@ function hashFunction(string $name): int
     return $sumOfChars % 10;
 }
 
-function contains(string $name): int
+function contains(string $name): bool
 {
     global $hashSet;
     $index = hashFunction($name);
